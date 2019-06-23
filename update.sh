@@ -1,8 +1,17 @@
 #!/bin/bash
 
+# I use this script to include library header files into separate project git repositories. I don't like submodules.
+# Copyright (c) 2019 Thomas Kremer
+
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 2 or 3 as
+# published by the Free Software Foundation.
+
 # run from parent directory.
 # usage:
 #   include/update.sh
+#
+#   updates all files from ../include/ to include/ that are already there.
 
 src="../include"
 dest="include"
@@ -19,6 +28,6 @@ for f in "$src"/*; do
       rm "$f2"
     fi
     echo "installing new version of \"$fname\"."
-    echo cp -a "$f" "$f2"
+    cp -a "$f" "$f2"
   fi
 done
