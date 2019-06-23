@@ -1,6 +1,7 @@
 /*
-   --- ADC watcher ---
-   interface to continually read multiple ADC channels with oversampling.
+
+  ADC watcher
+  interface to continually read multiple ADC channels with oversampling.
 
   Copyright (c) 2019 Thomas Kremer
 
@@ -15,7 +16,7 @@
 #ifndef __ADC_WATCH_H__
 #define __ADC_WATCH_H__
 
-#include <adc.h>
+#include "adc.h"
 
 #define ADCW_STATE_STOPPED 0
 #define ADCW_STATE_INIT 1
