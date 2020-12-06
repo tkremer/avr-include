@@ -31,6 +31,10 @@ typedef struct {
   // mask just caches the total bitmask for the pulse start and DDR setting.
 } servo_array_t;
 
+// called between cycles. If glitch-free operation is desired, pwms should only
+// be changed in this callback (and announced via _pwms_changed()).
+void EVENT_servo_array_idle(servo_array_t* ctx);
+
 // ctx is the servo array context.
 // port is &PORTB/&PORTC/&PORTD...
 // mask gives the mask of pins to be driven on that port.
@@ -117,6 +121,7 @@ void servo_array_reorder(servo_array_t* ctx) {
 //void inttohex(uint32_t value, char* dest, int count);
 
 // TODO: should we have a more absolute approach to time?
+// TODO: event "idle", stopping and reordering should already happen at the end of the last cycle rather than at the beginning of the new one.
 // timer event handler.
 void servo_array_ontimer(void* param) {
   servo_array_t* ctx = (servo_array_t*) param;
@@ -133,6 +138,7 @@ void servo_array_ontimer(void* param) {
   //  if (ctx->port == &PORTC && ch2 == 0)
   //    LEDs_TurnOffLEDs(LEDS_LED1);
   if (ch == 0xff) {
+    EVENT_servo_array_idle(ctx); // if you want to change pwms, now is the time.
     if (ctx->pos & 0x80) {
       // stop flag. Also indicates, there is still a handler queued.
       ctx->pos = 0;

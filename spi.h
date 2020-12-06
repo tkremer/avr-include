@@ -16,6 +16,8 @@
 #ifndef __MY_SPI_H__
 #define __MY_SPI_H__
 
+#include <stdbool.h>
+
 //#ifndef NO_LUFA
 // defined in LUFA/Version.h. Include before this file if you use LUFA.
 #ifdef LUFA_VERSION_INTEGER
@@ -30,6 +32,10 @@
   byte (e.g. right before we send the next one).
 
 */
+
+#ifndef ATTR_ALWAYS_INLINE
+#define ATTR_ALWAYS_INLINE __attribute__((always_inline))
+#endif
 
 static inline void SPI_AsyncTransferByte(const uint8_t Byte) ATTR_ALWAYS_INLINE;
 static inline uint8_t SPI_AsyncWaitResult(void) ATTR_ALWAYS_INLINE;
